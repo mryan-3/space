@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 3D Assets & Models
+*.glb
+*.gltf
+public/models/*.glb
+public/models/*.gltf
+public/models/custom/
