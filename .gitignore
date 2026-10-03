@@ -22,3 +22,10 @@ yarn-error.log*
 # Environment
 .env*
 .vercel/
+
+# 3D Assets & Models
+*.glb
+*.gltf
+client/public/models/*.glb
+client/public/models/*.gltf
+client/public/models/custom/
