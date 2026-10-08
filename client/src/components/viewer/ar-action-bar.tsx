@@ -3,14 +3,15 @@
 import { RefObject } from "react";
 import { ModelItem } from "@/lib/types";
 import { useARCapability } from "@/hooks/use-ar-capability";
-import { CubeFocus, DeviceMobileCamera } from "@phosphor-icons/react";
+import { CubeFocus, DeviceMobileCamera, QrCode } from "@phosphor-icons/react";
 
 interface ARActionBarProps {
   model: ModelItem;
   viewerRef: RefObject<HTMLElement | null>;
+  onOpenQR?: () => void;
 }
 
-export function ARActionBar({ model, viewerRef }: ARActionBarProps) {
+export function ARActionBar({ model, viewerRef, onOpenQR }: ARActionBarProps) {
   const { isMobile, canActivateAR, arStatus, launchAR } =
     useARCapability(viewerRef);
 
@@ -45,9 +46,9 @@ export function ARActionBar({ model, viewerRef }: ARActionBarProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E8E8E3] p-4 flex items-center justify-between gap-4 shadow-xs">
+    <div className="bg-white rounded-2xl border border-[#E8E8E3] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-[#F4F4F0] flex items-center justify-center text-[#2C5E43]">
+        <div className="w-9 h-9 rounded-xl bg-[#F4F4F0] flex items-center justify-center text-[#2C5E43] shrink-0">
           <DeviceMobileCamera size={20} weight="bold" />
         </div>
         <div className="flex flex-col">
@@ -55,13 +56,19 @@ export function ARActionBar({ model, viewerRef }: ARActionBarProps) {
             Augmented Reality Ready
           </span>
           <span className="text-xs text-[#64748B]">
-            Open on an iOS or Android device to place this {model.name} at 1:1 scale.
+            Place this {model.name} in your room at 1:1 scale using your phone.
           </span>
         </div>
       </div>
-      <div className="hidden md:flex items-center text-xs text-[#64748B] bg-[#F4F4F0] px-3 py-1.5 rounded-lg">
-        {placementLabel}
-      </div>
+      <button
+        onClick={onOpenQR}
+        type="button"
+        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#2C5E43] hover:bg-[#234b35] text-white text-xs font-medium flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer shadow-xs whitespace-nowrap shrink-0"
+      >
+        <QrCode size={16} weight="bold" />
+        <span>Scan with Phone</span>
+      </button>
     </div>
   );
 }
+
