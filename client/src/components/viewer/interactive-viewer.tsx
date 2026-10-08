@@ -6,6 +6,7 @@ import { ModelCanvas } from "./model-canvas";
 import { DimensionCard } from "./dimension-card";
 import { ModelControls } from "./model-controls";
 import { ARActionBar } from "./ar-action-bar";
+import { QRHandoffModal } from "@/components/qr/qr-handoff-modal";
 
 interface InteractiveViewerProps {
   model: ModelItem;
@@ -13,6 +14,7 @@ interface InteractiveViewerProps {
 
 export function InteractiveViewer({ model }: InteractiveViewerProps) {
   const [autoRotate, setAutoRotate] = useState(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const viewerRef = useRef<HTMLElement | null>(null);
 
   const handleToggleRotate = () => {
@@ -53,8 +55,19 @@ export function InteractiveViewer({ model }: InteractiveViewerProps) {
         </div>
       </div>
 
-      <ARActionBar model={model} viewerRef={viewerRef} />
+      <ARActionBar
+        model={model}
+        viewerRef={viewerRef}
+        onOpenQR={() => setIsQRModalOpen(true)}
+      />
+
+      <QRHandoffModal
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+        model={model}
+      />
     </div>
   );
 }
+
 
