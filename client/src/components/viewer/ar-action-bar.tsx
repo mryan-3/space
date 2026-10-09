@@ -39,8 +39,9 @@ export function ARActionBar({ model, viewerRef, onOpenQR }: ARActionBarProps) {
           className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#2C5E43] hover:bg-[#234b35] text-white text-xs font-medium flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer shadow-xs"
         >
           <CubeFocus size={16} weight="bold" />
-          <span>Launch AR Experience</span>
+          <span>View in My Space</span>
         </button>
+
       </div>
     );
   }

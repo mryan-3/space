@@ -17,4 +17,5 @@ export interface ModelItem {
   dimensions: ModelDimensions;
   placement: "floor" | "auto";
   scaleFixed?: boolean;
+  isCustom?: boolean;
 }
