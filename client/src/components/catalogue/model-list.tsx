@@ -1,59 +1,70 @@
 "use client";
 
 import { ModelItem } from "@/lib/types";
-import { Cube } from "@phosphor-icons/react";
+import { ModelItemCard } from "./model-item-card";
+import { UploadSimple, BookOpen } from "@phosphor-icons/react";
 
 interface ModelListProps {
   models: ModelItem[];
   selectedId: string;
   onSelect: (model: ModelItem) => void;
+  onDeleteCustom?: (id: string) => void;
+  onOpenUpload?: () => void;
+  onOpenSources?: () => void;
 }
 
-export function ModelList({ models, selectedId, onSelect }: ModelListProps) {
+export function ModelList({
+  models,
+  selectedId,
+  onSelect,
+  onDeleteCustom,
+  onOpenUpload,
+  onOpenSources,
+}: ModelListProps) {
   return (
     <section className="flex flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-[#1A202C]">
-          Available 3D Models
-        </h3>
-        <span className="text-xs text-[#64748B]">{models.length} items</span>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-[#1A202C]">
+            Available 3D Models
+          </h3>
+          <span className="text-xs text-[#64748B]">({models.length})</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {onOpenSources && (
+            <button
+              type="button"
+              onClick={onOpenSources}
+              className="px-2.5 py-1.5 text-xs text-[#64748B] hover:text-[#1A202C] bg-white border border-[#E8E8E3] rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <BookOpen size={14} />
+              <span>Free Sources</span>
+            </button>
+          )}
+          {onOpenUpload && (
+            <button
+              type="button"
+              onClick={onOpenUpload}
+              className="px-3 py-1.5 text-xs font-medium text-white bg-[#2C5E43] hover:bg-[#234b35] rounded-xl flex items-center gap-1.5 transition-transform active:scale-95 cursor-pointer shadow-xs"
+            >
+              <UploadSimple size={14} weight="bold" />
+              <span>Upload Model</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {models.map((item) => {
-          const isSelected = item.id === selectedId;
-          const { width, depth, height, unit } = item.dimensions;
-
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onSelect(item)}
-              className={`text-left p-3.5 rounded-2xl border transition-all flex flex-col gap-2 ${
-                isSelected
-                  ? "bg-white border-[#2C5E43] ring-1 ring-[#2C5E43] shadow-xs"
-                  : "bg-white/80 border-[#E8E8E3] hover:bg-white hover:border-[#D1D1CB]"
-              }`}
-            >
-              <div className="flex items-center justify-between w-full">
-                <span className="text-[11px] font-semibold text-[#2C5E43] uppercase tracking-wider">
-                  {item.category}
-                </span>
-                <span className="text-[11px] text-[#64748B]">
-                  {width} × {depth} × {height} {unit}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F4F4F0] text-[#1A202C] flex items-center justify-center shrink-0">
-                  <Cube size={15} weight="bold" />
-                </div>
-                <span className="text-xs font-semibold text-[#1A202C] truncate">
-                  {item.name}
-                </span>
-              </div>
-            </button>
-          );
-        })}
+        {models.map((item) => (
+          <ModelItemCard
+            key={item.id}
+            item={item}
+            isSelected={item.id === selectedId}
+            onSelect={onSelect}
+            onDelete={onDeleteCustom}
+          />
+        ))}
       </div>
     </section>
   );

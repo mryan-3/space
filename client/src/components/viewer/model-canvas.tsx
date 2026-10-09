@@ -54,8 +54,9 @@ export function ModelCanvas({
         className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#2C5E43] hover:bg-[#234b35] text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-md flex items-center gap-2 transition-transform active:scale-95 cursor-pointer z-20"
       >
         <CubeFocus size={16} weight="bold" />
-        <span>View in your room</span>
+        <span>View in My Space</span>
       </button>
+
     </model-viewer>
   );
 }
